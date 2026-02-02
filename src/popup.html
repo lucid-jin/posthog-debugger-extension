@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PostHog Debugger</title>
+  <link rel="stylesheet" href="panel.css">
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1>PostHog Debugger</h1>
+        <span class="event-count" id="eventCount">0 events</span>
+      </div>
+      <div class="header-right">
+        <input type="text" id="searchInput" placeholder="Filter events..." class="search-input">
+        <button id="clearBtn" class="btn btn-danger">Clear</button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="events">Events</button>
+      <button class="tab" data-tab="user">User Data</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Events Tab -->
+      <div class="tab-content active" id="eventsTab">
+        <div class="split-view">
+          <!-- Event List -->
+          <div class="event-list" id="eventList">
+            <div class="empty-state" id="emptyState">
+              <p>No events captured yet.</p>
+              <p class="hint">Navigate your app to capture PostHog events.</p>
+            </div>
+          </div>
+
+          <!-- Event Detail -->
+          <div class="event-detail" id="eventDetail">
+            <div class="detail-placeholder">
+              <p>Select an event to view details</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Tab -->
+      <div class="tab-content" id="userTab">
+        <div class="user-data" id="userData">
+          <div class="empty-state">
+            <p>No user identified yet.</p>
+            <p class="hint">User data will appear after posthog.identify() is called.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Status Bar -->
+    <footer class="status-bar">
+      <span id="connectionStatus" class="status connected">Connected</span>
+      <span id="lastUpdate">Connecting...</span>
+    </footer>
+  </div>
+
+  <script src="shared-ui.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
