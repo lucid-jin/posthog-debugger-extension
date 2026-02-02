@@ -141,9 +141,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     tabUserData.set(tabId, {
       ...existing,
+      distinctId: message.data.distinctId || existing.distinctId,
       properties: {
         ...(existing.properties || {}),
-        ...message.data.properties
+        ...(message.data.properties || {})
+      },
+      propertiesSetOnce: {
+        ...(existing.propertiesSetOnce || {}),
+        ...(message.data.propertiesSetOnce || {})
       },
       timestamp: Date.now()
     });

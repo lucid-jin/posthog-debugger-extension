@@ -283,6 +283,16 @@
     }
   }
 
+  function sendPersonProperties(item) {
+    if (item.$set || item.$set_once) {
+      sendToExtension('setPersonProperties', {
+        distinctId: item.$distinct_id || item.distinct_id || item.properties?.$distinct_id,
+        properties: item.$set || {},
+        propertiesSetOnce: item.$set_once || {}
+      });
+    }
+  }
+
   function extractEvents(data, url) {
     const events = [];
     const pageUrl = window.location.href;
@@ -305,6 +315,7 @@
           };
           events.push(evt);
         }
+        sendPersonProperties(item);
       });
     }
     // Handle single event
@@ -316,6 +327,7 @@
         timestamp: data.timestamp || Date.now(),
         url: pageUrl
       });
+      sendPersonProperties(data);
     }
     // Handle identify
     else if (data?.$set || url.includes('/identify') || url.includes('/engage')) {
@@ -338,6 +350,7 @@
             url: pageUrl
           });
         }
+        sendPersonProperties(item);
       });
     }
 
